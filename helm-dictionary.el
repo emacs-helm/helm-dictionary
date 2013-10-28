@@ -144,6 +144,15 @@
         :candidate-number-limit 500
         :buffer "*helm dictionary*"))
 
+;;;###autoload
+(defun helm-dictionary-word-at-point ()
+  (interactive)
+  (helm :sources 'helm-source-dictionary
+        :full-frame t
+        :input (word-at-point)
+        :candidate-number-limit 500
+        :buffer "*helm dictionary*"))
+
 (provide 'helm-dictionary)
 
 ;; Local Variables:
