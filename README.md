@@ -33,6 +33,6 @@ These dictionaries were automatically created from the Wiktionary database.  The
 
 ## Usage
 
-Use the command `helm-dictionary` to start a search.  Since the grep tool is used to perform the search, you can use regular expressions.
+Use the command `helm-dictionary` to start a new search.  Alternatively, you can use `helm-dictionary-word-at-point` to search the word under the cursor.  Since the grep tool is used to perform the searches, you can also use regular expressions.
 
 There are two actions available: insert the currently selected term in language 1 or language 2 at point, i.e., the cursor position at which `helm-dictionary` was called.
