@@ -67,11 +67,19 @@
   :group 'helm-dictionary
   :type  'file)
 
+(defcustom helm-dictionary-ignore-case t
+  "Whether or not case should be ignored when searching.
+Case-sensitive searchers are much faster than case-insensitive
+searchers."
+  :group 'helm-dictionary
+  :type  'boolean)
+
 
 (defun helm-dictionary-init ()
   "Initialize async grep process for `helm-source-dictionary'."
   (let ((process-connection-type nil)
-        (cmd (format "grep -i '%s' %s | grep -v '^#'"
+        (cmd (format "grep %s '%s' %s | grep -v '^#'"
+                     (if helm-dictionary-ignore-case "-i" "")
                      helm-pattern
                      helm-dictionary-database)))
     (prog1
