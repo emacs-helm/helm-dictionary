@@ -80,7 +80,7 @@ searchers."
   (let ((process-connection-type nil)
         (cmd (format "grep %s '%s' %s | grep -v '^#'"
                      (if helm-dictionary-ignore-case "-i" "")
-                     helm-pattern
+                     (replace-regexp-in-string "\\\\$" "" helm-pattern)
                      helm-dictionary-database)))
     (prog1
       (start-process-shell-command "helm-dictionary" helm-buffer cmd)
@@ -108,12 +108,13 @@ searchers."
         for entry = (split-string i " :: ")
         for l1terms = (split-string (car entry) " | ")
         for l2terms = (split-string (cadr entry) " | ")
+        for filtered-helm-pattern = (replace-regexp-in-string "\\\\$" "" helm-pattern)
         for width = (save-excursion (with-helm-window (window-width)))
         append
         (loop for l1term in l1terms
               for l2term in l2terms
-              if (or (string-match helm-pattern l1term)
-                     (string-match helm-pattern l2term))
+              if (or (string-match filtered-helm-pattern l1term)
+                     (string-match filtered-helm-pattern l2term))
               collect
               (cons 
                 (concat
