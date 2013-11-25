@@ -79,6 +79,34 @@ searchers."
   :group 'helm-dictionary
   :type  'boolean)
 
+(defcustom helm-dictionary-online-dicts
+    '(("translate.reference.com de->eng" .
+       "http://translate.reference.com/translate?query=%s&src=de&dst=en")
+      ("translate.reference.com eng->de" .
+       "http://translate.reference.com/translate?query=%s&src=en&dst=de")
+      ("leo eng<->de" .
+       "http://dict.leo.org/ende?lp=ende&lang=de&search=%s")
+      ("en.wiktionary.org" . "http://en.wiktionary.org/wiki/%s")
+      ("de.wiktionary.org" . "http://de.wiktionary.org/wiki/%s")
+      ("linguee-eng<->de"    . "http://www.linguee.de/deutsch-englisch/search\
+?sourceoverride=none&source=auto&query=%s"))
+    "Alist of online dictionaries.")
+
+(defcustom helm-dictionary-browser-function
+  (lambda (url)
+    (require 'url) (require 'eww)
+    (url-retrieve
+     url
+     (lambda (&rest args)
+       (save-selected-window
+         (let ((display-buffer-alist
+                '(("^\\*eww\\*$"
+                   (display-buffer-pop-up-frame)
+                   (reusable-frames . nil)))))
+           (apply #'eww-render args))))
+     (list url)))
+  "Function for browsing online dictionaries.")
+
 
 (defun helm-dictionary-init ()
   "Initialize async grep process for `helm-source-dictionary'."
@@ -139,6 +167,21 @@ searchers."
     (replace-regexp-in-string
       " *{.+}\\| *\\[.+\\]" "" (cdr entry))))
 
+(defun helm-dictionary-make-lookup-fun (site)
+  (lexical-let ((site site))
+    (lambda (cand)
+      (funcall helm-dictionary-browser-function
+               (format site (url-hexify-string cand))))))
+
+(defun helm-dictionary-create-online-source ()
+  `((name . "Lookup online")
+    (dummy)
+    (action
+     ,@(mapcar
+        (lambda (entry) `(,(car entry) .
+                     ,(helm-dictionary-make-lookup-fun (cdr entry))))
+        helm-dictionary-online-dicts))))
+
 
 (defvar helm-source-dictionary
   '((name . "Search dictionary")
@@ -153,7 +196,7 @@ searchers."
 ;;;###autoload
 (defun helm-dictionary ()
   (interactive)
-  (helm :sources 'helm-source-dictionary
+  (helm :sources `(helm-source-dictionary ,(helm-dictionary-create-online-source))
         :full-frame t
         :candidate-number-limit 500
         :buffer "*helm dictionary*"))
@@ -161,7 +204,7 @@ searchers."
 ;;;###autoload
 (defun helm-dictionary-word-at-point ()
   (interactive)
-  (helm :sources 'helm-source-dictionary
+  (helm :sources `(helm-source-dictionary ,(helm-dictionary-create-online-source))
         :full-frame t
         :input (word-at-point)
         :candidate-number-limit 500
