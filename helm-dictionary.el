@@ -181,6 +181,7 @@ searchers."
 (defvar helm-dictionary-source-online
   `((name . "Lookup online")
     (dummy)
+    (nohighlight)
     (filtered-candidate-transformer
      . (lambda (_cands _source) helm-dictionary-online-dicts))
     (action
