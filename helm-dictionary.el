@@ -167,6 +167,17 @@ searchers."
     (replace-regexp-in-string
       " *{.+}\\| *\\[.+\\]" "" (cdr entry))))
 
+
+(defvar helm-source-dictionary
+  '((name . "Search dictionary")
+    (candidates-process . helm-dictionary-init)
+    (candidate-transformer . helm-dictionary-transformer)
+    (delayed)
+    (nohighlight)
+    (no-matchplugin)
+    (action . (("Insert German term"  . helm-dictionary-insert-l1term)
+               ("Insert English term" . helm-dictionary-insert-l2term)))))
+
 (defvar helm-dictionary-source-online
   `((name . "Lookup online")
     (dummy)
@@ -178,17 +189,6 @@ searchers."
                                   (format (cdr (assoc cand helm-dictionary-online-dicts))
                                           (url-hexify-string helm-pattern))))))
   "Source for online lookup.")
-
-
-(defvar helm-source-dictionary
-  '((name . "Search dictionary")
-    (candidates-process . helm-dictionary-init)
-    (candidate-transformer . helm-dictionary-transformer)
-    (delayed)
-    (nohighlight)
-    (no-matchplugin)
-    (action . (("Insert German term"  . helm-dictionary-insert-l1term)
-               ("Insert English term" . helm-dictionary-insert-l2term)))))
 
 ;;;###autoload
 (defun helm-dictionary ()
