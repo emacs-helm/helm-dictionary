@@ -167,12 +167,6 @@ searchers."
     (replace-regexp-in-string
       " *{.+}\\| *\\[.+\\]" "" (cdr entry))))
 
-(defun helm-dictionary-make-lookup-fun (site)
-  (lexical-let ((site site))
-    (lambda (cand)
-      (funcall helm-dictionary-browser-function
-               (format site (url-hexify-string cand))))))
-
 (defvar helm-dictionary-source-online
   '((name . "Lookup online")
     (dummy)
