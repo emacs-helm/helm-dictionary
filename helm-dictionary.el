@@ -182,12 +182,11 @@ searchers."
   `((name . "Lookup online")
     (dummy)
     (filtered-candidate-transformer
-     .
-     ,(lambda (_cands _source)
-        (mapcar #'car helm-dictionary-online-dicts)))
-    (action . ,(lambda (cand) (funcall helm-dictionary-browser-function
-                                  (format (cdr (assoc cand helm-dictionary-online-dicts))
-                                          (url-hexify-string helm-pattern))))))
+     . (lambda (_cands _source) helm-dictionary-online-dicts))
+    (action
+     . (lambda (cand) (funcall helm-dictionary-browser-function
+                               (format cand
+                                       (url-hexify-string helm-pattern))))))
   "Source for online lookup.")
 
 ;;;###autoload
