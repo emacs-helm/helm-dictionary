@@ -173,13 +173,17 @@ searchers."
       (funcall helm-dictionary-browser-function
                (format site (url-hexify-string cand))))))
 
-(defun helm-dictionary-create-online-source (entry)
-  (let ((name (car entry))
-        (url  (cdr entry)))
-    `((name . ,(format "Lookup with %s" name))
-      (dummy)
-      (action
-       (,name . ,(helm-dictionary-make-lookup-fun url))))))
+(defvar helm-dictionary-source-online
+  '((name . "Lookup online")
+    (dummy)
+    (filtered-candidate-transformer
+     .
+     (lambda (_cands _source)
+       (mapcar #'car helm-dictionary-online-dicts)))
+    (action . (lambda (cand) (funcall helm-dictionary-browser-function
+                                 (format (cdr (assoc cand helm-dictionary-online-dicts))
+                                         (url-hexify-string helm-pattern))))))
+  "Source for online lookup.")
 
 
 (defvar helm-source-dictionary
@@ -195,9 +199,7 @@ searchers."
 ;;;###autoload
 (defun helm-dictionary ()
   (interactive)
-  (helm :sources `(helm-source-dictionary
-                   ,@(mapcar #'helm-dictionary-create-online-source
-                             helm-dictionary-online-dicts))
+  (helm :sources '(helm-source-dictionary helm-dictionary-source-online)
         :full-frame t
         :candidate-number-limit 500
         :buffer "*helm dictionary*"))
@@ -205,9 +207,7 @@ searchers."
 ;;;###autoload
 (defun helm-dictionary-word-at-point ()
   (interactive)
-  (helm :sources `(helm-source-dictionary
-                   ,@(mapcar #'helm-dictionary-create-online-source
-                             helm-dictionary-online-dicts))
+  (helm :sources '(helm-source-dictionary helm-dictionary-source-online)
         :full-frame t
         :input (word-at-point)
         :candidate-number-limit 500
