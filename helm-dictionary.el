@@ -92,6 +92,15 @@ searchers."
 ?sourceoverride=none&source=auto&query=%s"))
     "Alist of online dictionaries.")
 
+(defcustom helm-dictionary-browser-function 'browse-url-default-browser
+  "The browser that is used to access online dictionaries.
+Appropriate values are functions that take a URL and open it
+using some web browser.  The default function tries to open the
+URL in an external browser.  An alternative is to use
+`eww-browse-url` which opens the URL inside Emacs."
+  :group 'helm-dictionary
+  :type 'function)
+
 
 (defun helm-dictionary-init ()
   "Initialize async grep process for `helm-source-dictionary'."
@@ -170,8 +179,9 @@ searchers."
     (filtered-candidate-transformer
      . (lambda (_cands _source) helm-dictionary-online-dicts))
     (action
-     . (lambda (cand) (browse-url (format cand
-                                          (url-hexify-string helm-pattern))))))
+     . (lambda (cand) (funcall helm-dictionary-browser-function
+                               (format cand (url-hexify-string
+                                             helm-pattern)))))))
   "Source for online lookup.")
 
 ;;;###autoload
