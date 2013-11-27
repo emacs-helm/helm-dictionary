@@ -37,10 +37,10 @@ These dictionaries were automatically created from the Wiktionary database.  The
 
 If your local dictionaries doesn't have an entry for a word, it can be useful to try online dictionaries available on the web.  Helm-dictionary has a dummy source that allows you to lookup currently entered string in these online dictionaries.  The variable `helm-dictionary-online-dicts` allows you to configure which online dictionaries should be listed.  The variable is a list conses.  The first element of each cons specifies the name of the online dictionary for display during searches.  The second element of each cons is the URL used for retrieving search results from the respective online dictionary.  This URL has to contain a "%s" at the position where the search term should be inserted.
 
-Helm-dictionary uses the function `browse-url` to open the online dictionaries.  By default, this function opens an external web browser or opens a new tab in a running browser.  If you prefer to access online dictionaries inside Emacs, you can redefine the behavior of `browse-url` by adding the following to your startup file.
+By default, helm-dictionary uses the function `browse-url-default-browser` for opening online dictionaries.  This function opens an external web browser or opens a new tab in a running browser.  If you prefer to access online dictionaries inside Emacs, you can redefine the customization variable `helm-dictionary-browser-function` to point to an alternative function for opening URLs, e.g., `eww-browse-url`:
 
     (require 'eww)
-    (setq browse-url-browser-function 'eww-browse-url)
+    (setq helm-dictionary-browser-function 'eww-browse-url)
 
 ## Usage
 
