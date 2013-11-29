@@ -62,6 +62,7 @@
 
 (eval-when-compile (require 'cl))
 (require 'helm)
+(require 'browse-url)
 
 (defgroup helm-dictionary nil
   "Helm plugin for looking up a dictionary."
@@ -92,15 +93,16 @@ searchers."
 ?sourceoverride=none&source=auto&query=%s"))
     "Alist of online dictionaries.")
 
-(defcustom helm-dictionary-browser-function browse-url-browser-function
-  "The browser that is used to access online dictionaries.  The
-default value, `browse-url-browser-function', is the current
-emacs-wide standard browser that is used by the command
-`browse-url'.  Possible values are all values that are admissible
-for the customization variable `browse-url-browser-function'."
+(defcustom helm-dictionary-browser-function nil
+  "The browser that is used to access online dictionaries.  If
+nil, the current emacs-wide standard browser will be used, i.e.,
+the browser specified by the customization variable
+`browse-url-browser-function'.  Other possible values are all
+values that are admissible for the `browse-url-browser-function'."
   :group 'helm-dictionary
   :type '(choice
-	  (function-item :tag "Currently configured default" :value browse-url-browser-function)
+	  (function-item :tag "Currently configured default for `browse-url'"
+                         :value nil)
 	  (function-item :tag "Emacs W3" :value  browse-url-w3)
 	  (function-item :tag "W3 in another Emacs via `gnudoit'"
 			 :value  browse-url-w3-gnudoit)
@@ -213,7 +215,9 @@ for the customization variable `browse-url-browser-function'."
      . (lambda (_cands _source) helm-dictionary-online-dicts))
     (action
      . (lambda (cand)
-         (let ((browse-url-browser-function helm-dictionary-browser-function))
+         (let ((browse-url-browser-function
+             (or helm-dictionary-browser-function
+                 browse-url-browser-function)))
            (browse-url (format cand (url-hexify-string helm-pattern)))))))
   "Source for online lookup.")
 

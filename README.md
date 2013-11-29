@@ -42,7 +42,7 @@ Helm-dictionary uses the function `browse-url` for opening online dictionaries. 
     (require 'eww)
     (setq helm-dictionary-browser-function 'eww-browse-url)
 
-Admissible values for `helm-dictionary-browser-function` are the same as for `browse-url-browser-function`.
+Admissible values for `helm-dictionary-browser-function` are the same as for `browse-url-browser-function`.  If set to nil, the current emacs-wide default will be used, i.e., the browser specified in `browse-url-browser-function`.
 
 ## Usage
 
