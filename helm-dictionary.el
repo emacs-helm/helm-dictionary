@@ -20,6 +20,18 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+;;; Commentary:
+
+;; This helm source can be used to look-up words in local (offline)
+;; dictionaries.  It also provides short-cuts for various online
+;; dictionaries, which is useful in situations where the local
+;; dictionary doesn't have an entry for a word.
+;;
+;; Dictionaries are available for a variety of language pairs.  See
+;; the project page for an incomplete list:
+;;
+;;     https://github.com/emacs-helm/helm-dictionary
+
 ;;; Install:
 
 ;; Put this file on your Emacs-Lisp load path and add the following in
@@ -57,6 +69,48 @@
 ;;
 ;;   http://wiktionary-export.nataraj.su/en/
 ;;
+;; If the local dictionary doesn't have an entry for a word, it can be
+;; useful to try online dictionaries available on the
+;; web.  Helm-dictionary has a dummy source that provides shortcuts
+;; for looking up the currently entered string in these online
+;; dictionaries.  The variable `helm-dictionary-online-dicts'
+;; specifies which online dictionaries should be listed.  The value of
+;; that variable is a list conses.  The first element of each cons
+;; specifies the name of an online dictionary for display during
+;; searches.  The second element is the URL used for retrieving search
+;; results from the respective dictionary.  This URL has to contain a
+;; "%s" at the position where the search term should be inserted.
+;;
+;; Helm-dictionary uses the function `browse-url' for opening online
+;; dictionaries.  Usually, this function opens the URL in an external
+;; web browser.  If a different method for opening URLs is preferred,
+;; the customization variable `helm-dictionary-browser-function' can
+;; be set to an alternative function for opening URLs such as
+;; `eww-browse-url':
+;;
+;;    (require 'eww)
+;;    (setq helm-dictionary-browser-function 'eww-browse-url)
+;;
+;; Admissible values for `helm-dictionary-browser-function` are the
+;; same as for `browse-url-browser-function`.  If set to nil, the
+;; current emacs-wide default will be used, i.e., the browser
+;; specified in `browse-url-browser-function`.
+
+;;; Usage:
+
+;; Use the command `helm-dictionary' to start a new
+;; search.  Alternatively, you can use `helm-dictionary-word-at-point'
+;; to search the word under the cursor.  Since the grep tool is used
+;; to perform the searches, you can also use regular expressions.
+
+;; There are two actions available: insert the currently selected term
+;; in language 1 or language 2 at point, i.e., the cursor position at
+;; which `helm-dictionary' was called.
+
+;; In the section "Lookup online", you can choose among several online
+;; dictionaries.  If you select one of the entries listed in this
+;; section, a browser will be used to display search results from the
+;; respective online dictionary.
 
 ;;; Code:
 
