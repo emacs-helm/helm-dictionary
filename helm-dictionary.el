@@ -155,10 +155,9 @@ the browser specified by the customization variable
 values that are admissible for the `browse-url-browser-function'."
   :group 'helm-dictionary
   :type '(choice
-          (const         :tag "Currently configured default for `browse-url'"
+          (const         :tag "Currently configured default for Helm"
                          :value nil)
           (function-item :tag "Emacs interface to w3m" :value w3m-browse-url)
-          (function-item :tag "Helm's default browser" :value helm-browse-url)
           (function-item :tag "Emacs W3" :value  browse-url-w3)
           (function-item :tag "W3 in another Emacs via `gnudoit'"
                          :value  browse-url-w3-gnudoit)
@@ -274,7 +273,7 @@ values that are admissible for the `browse-url-browser-function'."
          (let ((browse-url-browser-function
              (or helm-dictionary-browser-function
                  browse-url-browser-function)))
-           (browse-url (format cand (url-hexify-string helm-pattern)))))))
+           (helm-browse-url (format cand (url-hexify-string helm-pattern)))))))
   "Source for online lookup.")
 
 ;;;###autoload
