@@ -200,7 +200,7 @@ values that are admissible for the `browse-url-browser-function'."
         for l1terms = (split-string (car entry) " | ")
         for l2terms = (split-string (cadr entry) " | ")
         for filtered-helm-pattern = (replace-regexp-in-string "\\\\$" "" helm-pattern)
-        for width = (save-excursion (with-helm-window (window-width)))
+        for width = (with-helm-window (window-width))
         unless headerp
         append
         (loop for l1term in l1terms
