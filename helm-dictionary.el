@@ -235,12 +235,10 @@ values that are admissible for the `browse-url-browser-function'."
     (action . (("Insert initial term"  . helm-dictionary-insert-l1term)
                ("Insert translation term" . helm-dictionary-insert-l2term)))))
 
-(defvar helm-dictionary-source-online
+(defvar helm-source-dictionary-online
   `((name . "Lookup online")
-    (dummy)
+    (candidates . helm-dictionary-online-dicts)
     (nohighlight)
-    (filtered-candidate-transformer
-     . (lambda (_cands _source) helm-dictionary-online-dicts))
     (action
      . (lambda (cand)
          (let ((browse-url-browser-function
@@ -252,7 +250,7 @@ values that are admissible for the `browse-url-browser-function'."
 ;;;###autoload
 (defun helm-dictionary (arg)
   (interactive "P")
-  (helm :sources '(helm-source-dictionary helm-dictionary-source-online)
+  (helm :sources '(helm-source-dictionary helm-source-dictionary-online)
         :full-frame t
         :default (word-at-point)
         :input (and arg (word-at-point)) 
