@@ -192,7 +192,7 @@ values that are admissible for the `browse-url-browser-function'."
 )
 
 
-(defun helm-dict-transformer (candidates)
+(defun helm-dictionary-transformer (candidates)
   "Formats entries retrieved from the data base."
   (loop for i in candidates
         for headerp = (string-match "\\`#" i)
@@ -229,7 +229,7 @@ values that are admissible for the `browse-url-browser-function'."
 
 (defvar helm-source-dictionary
   '((name . "Search dictionary")
-    (candidate-transformer . helm-dict-transformer)
+    (candidate-transformer . helm-dictionary-transformer)
     (pattern-transformer . (lambda (pattern) (downcase pattern)))
     (candidates-file . helm-dictionary-database)
     (action . (("Insert initial term"  . helm-dictionary-insert-l1term)
