@@ -230,6 +230,7 @@ values that are admissible for the `browse-url-browser-function'."
 (defvar helm-source-dictionary
   '((name . "Search dictionary")
     (candidate-transformer . helm-dict-transformer)
+    (pattern-transformer . (lambda (pattern) (downcase pattern)))
     (candidates-file . helm-dictionary-database)
     (action . (("Insert initial term"  . helm-dictionary-insert-l1term)
                ("Insert translation term" . helm-dictionary-insert-l2term)))))
