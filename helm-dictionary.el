@@ -250,19 +250,12 @@ values that are admissible for the `browse-url-browser-function'."
   "Source for online lookup.")
 
 ;;;###autoload
-(defun helm-dictionary ()
-  (interactive)
+(defun helm-dictionary (arg)
+  (interactive "P")
   (helm :sources '(helm-source-dictionary helm-dictionary-source-online)
         :full-frame t
-        :candidate-number-limit 500
-        :buffer "*helm dictionary*"))
-
-;;;###autoload
-(defun helm-dictionary-word-at-point ()
-  (interactive)
-  (helm :sources '(helm-source-dictionary helm-dictionary-source-online)
-        :full-frame t
-        :input (word-at-point)
+        :default (word-at-point)
+        :input (and arg (word-at-point)) 
         :candidate-number-limit 500
         :buffer "*helm dictionary*"))
 
