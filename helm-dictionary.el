@@ -261,8 +261,8 @@ values that are admissible for the `browse-url-browser-function'."
     (delayed)
     (nohighlight)
     (no-matchplugin)
-    (action . (("Insert German term"  . helm-dictionary-insert-l1term)
-               ("Insert English term" . helm-dictionary-insert-l2term)))))
+    (action . (("Insert source language term" . helm-dictionary-insert-l1term)
+               ("Insert target language term" . helm-dictionary-insert-l2term)))))
 
 (defvar helm-source-dictionary-online
   `((name . "Lookup online")
