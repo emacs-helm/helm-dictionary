@@ -3,6 +3,8 @@
 ;; Copyright 2013 Titus von der Malsburg <malsburg@posteo.de>
 
 ;; Author: Titus von der Malsburg <malsburg@posteo.de>
+;;         Michael Heerdegen <michael_heerdegen@web.de>
+;; Maintainer: Titus von der Malsburg <malsburg@posteo.de>
 ;; URL: https://github.com/emacs-helm/helm-dictionary
 ;; Version: 1.0.0
 ;; Package-Requires: ((helm "1.5.5"))
