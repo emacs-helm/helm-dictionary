@@ -129,13 +129,6 @@
   :group 'helm-dictionary
   :type  'file)
 
-(defcustom helm-dictionary-ignore-case t
-  "Whether or not case should be ignored when searching.
-Case-sensitive searchers are much faster than case-insensitive
-searchers."
-  :group 'helm-dictionary
-  :type  'boolean)
-
 (defcustom helm-dictionary-online-dicts
     '(("translate.reference.com de->eng" .
        "http://translate.reference.com/translate?query=%s&src=de&dst=en")
