@@ -39,12 +39,12 @@ These dictionaries were automatically created from the Wiktionary database.  The
 
 If the local dictionary doesn't have an entry for a word, it can be useful to try online dictionaries available on the web.  Helm-dictionary has a dummy source that provides shortcuts for looking up the currently entered string in these online dictionaries.  The variable `helm-dictionary-online-dicts` specifies which online dictionaries should be listed.  The value of that variable is a list conses.  The first element of each cons specifies the name of an online dictionary for display during searches.  The second element is the URL used for retrieving search results from the respective dictionary.  This URL has to contain a "%s" at the position where the search term should be inserted.
 
-Helm-dictionary uses the function `browse-url` for opening online dictionaries.  Usually, this function opens the URL in an external web browser.  If a different method for opening URLs is preferred, the customization variable `helm-dictionary-browser-function` can be set to an alternative function for opening URLs such as `eww-browse-url`:
+Helm-dictionary uses the function `helm-browse-url` for opening online dictionaries.  Usually, this function opens the URL in an external web browser.  If a different method for opening URLs is preferred, the customization variable `helm-dictionary-browser-function` can be set to an alternative function for opening URLs such as `eww-browse-url`:
 
     (require 'eww)
     (setq helm-dictionary-browser-function 'eww-browse-url)
 
-Admissible values for `helm-dictionary-browser-function` are the same as for `browse-url-browser-function`.  If set to nil, the current emacs-wide default will be used, i.e., the browser specified in `browse-url-browser-function`.
+Admissible values for `helm-dictionary-browser-function` are the same as for `browse-url-browser-function`.  If set to nil, Helm's current default browser will be used.
 
 ## Usage
 
