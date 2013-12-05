@@ -196,9 +196,9 @@ values that are admissible for the `browse-url-browser-function'."
   "Formats entries retrieved from the data base."
   (loop for i in candidates
         for headerp = (string-match "\\`#" i)
-        for entry = (split-string i " :: ")
-        for l1terms = (split-string (car entry) " | ")
-        for l2terms = (split-string (cadr entry) " | ")
+        for entry = (and (not headerp) (split-string i " :: "))
+        for l1terms = (and entry (split-string (car entry) " | "))
+        for l2terms = (helm-aif (cdr entry) (split-string (car it) " | "))
         for width = (with-helm-window (window-width))
         unless headerp append
         (loop for l1term in l1terms
