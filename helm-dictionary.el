@@ -194,53 +194,27 @@ values that are admissible for the `browse-url-browser-function'."
 )
 
 
-(defun helm-dictionary-init ()
-  "Initialize async grep process for `helm-source-dictionary'."
-  (let ((process-connection-type nil)
-        (cmd (format "grep %s '%s' %s | grep -v '^#'"
-                     (if helm-dictionary-ignore-case "-i" "")
-                     (replace-regexp-in-string "\\\\$" "" helm-pattern)
-                     helm-dictionary-database)))
-    (prog1
-      (start-process-shell-command "helm-dictionary" helm-buffer cmd)
-      (set-process-sentinel
-        (get-buffer-process helm-buffer)
-        #'(lambda (process event)
-            (if (string= event "finished\n")
-                (with-helm-window
-                  (setq mode-line-format
-                        '(" " mode-line-buffer-identification " "
-                          (line-number-mode "%l") " "
-                          (:eval (propertize
-                                  (format "[Grep Process Finish- (%s results)]"
-                                          (max (1- (count-lines
-                                                    (point-min) (point-max))) 0))
-                                  'face 'helm-grep-finish))))
-                  (force-mode-line-update))
-                (helm-log "Error: Egrep %s"
-                          (replace-regexp-in-string "\n" "" event))))))))
-
-
 (defun helm-dictionary-transformer (candidates)
   "Formats entries retrieved from the data base."
-  (loop for i in candidates
-        for entry = (split-string i " :: ")
-        for l1terms = (split-string (car entry) " | ")
-        for l2terms = (split-string (cadr entry) " | ")
-        for filtered-helm-pattern = (replace-regexp-in-string "\\\\$" "" helm-pattern)
-        for width = (save-excursion (with-helm-window (window-width)))
-        append
-        (loop for l1term in l1terms
-              for l2term in l2terms
-              if (or (string-match filtered-helm-pattern l1term)
-                     (string-match filtered-helm-pattern l2term))
-              collect
-              (cons 
-                (concat
-                  (truncate-string-to-width l1term (- (/ width 2) 1) 0 ?\s)
-                  " "
-                  (truncate-string-to-width l2term (- (/ width 2) 1) 0 ?\s))
-                (cons l1term l2term)))))
+  (let ((cands (remove-if (lambda (i) (string-match "\\`#" i)) candidates)))
+    (loop for i in cands
+          for entry = (split-string i " :: ")
+          for l1terms = (split-string (car entry) " | ")
+          for l2terms = (split-string (cadr entry) " | ")
+          for filtered-helm-pattern = (replace-regexp-in-string "\\\\$" "" helm-pattern)
+          for width = (save-excursion (with-helm-window (window-width)))
+          append
+          (loop for l1term in l1terms
+                for l2term in l2terms
+                if (or (string-match filtered-helm-pattern l1term)
+                       (string-match filtered-helm-pattern l2term))
+                collect
+                (cons 
+                  (concat
+                    (truncate-string-to-width l1term (- (/ width 2) 1) 0 ?\s)
+                    " "
+                    (truncate-string-to-width l2term (- (/ width 2) 1) 0 ?\s))
+                  (cons l1term l2term))))))
 
 
 (defun helm-dictionary-insert-l1term (entry)
@@ -256,11 +230,8 @@ values that are admissible for the `browse-url-browser-function'."
 
 (defvar helm-source-dictionary
   '((name . "Search dictionary")
-    (candidates-process . helm-dictionary-init)
+    (candidates-file . helm-dictionary-database)
     (candidate-transformer . helm-dictionary-transformer)
-    (delayed)
-    (nohighlight)
-    (no-matchplugin)
     (action . (("Insert German term"  . helm-dictionary-insert-l1term)
                ("Insert English term" . helm-dictionary-insert-l2term)))))
 
