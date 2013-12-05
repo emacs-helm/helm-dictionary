@@ -264,7 +264,7 @@ values that are admissible for the `browse-url-browser-function'."
     (action . (("Insert German term"  . helm-dictionary-insert-l1term)
                ("Insert English term" . helm-dictionary-insert-l2term)))))
 
-(defvar helm-dictionary-source-online
+(defvar helm-source-dictionary-online
   `((name . "Lookup online")
     (dummy)
     (nohighlight)
@@ -281,7 +281,7 @@ values that are admissible for the `browse-url-browser-function'."
 ;;;###autoload
 (defun helm-dictionary ()
   (interactive)
-  (helm :sources '(helm-source-dictionary helm-dictionary-source-online)
+  (helm :sources '(helm-source-dictionary helm-source-dictionary-online)
         :full-frame t
         :candidate-number-limit 500
         :buffer "*helm dictionary*"))
@@ -289,7 +289,7 @@ values that are admissible for the `browse-url-browser-function'."
 ;;;###autoload
 (defun helm-dictionary-word-at-point ()
   (interactive)
-  (helm :sources '(helm-source-dictionary helm-dictionary-source-online)
+  (helm :sources '(helm-source-dictionary helm-source-dictionary-online)
         :full-frame t
         :input (word-at-point)
         :candidate-number-limit 500
