@@ -189,13 +189,17 @@ values that are admissible for the `browse-url-browser-function'."
 
 (defun helm-dictionary-transformer (candidates)
   "Formats entries retrieved from the data base."
-  (let ((cands (remove-if (lambda (i) (string-match "\\`#" i)) candidates)))
-    (loop for i in cands
-          for entry = (split-string i " :: ")
-          for l1terms = (split-string (car entry) " | ")
-          for l2terms = (split-string (cadr entry) " | ")
-          for width = (with-helm-window (window-width))
-          append
+  (loop for i in candidates
+        with entry and l1terms and l2terms and width
+        if (or (string-match "\\`#" i)
+               (not (string-match " :: " i)))
+          append (list)
+        else
+          do     (setf entry (split-string i " :: "))
+          and do (setf l1terms (split-string (car entry) " | "))
+          and do (setf l2terms (split-string (cadr entry) " | "))
+          and do (setf width   (with-helm-window (window-width)))
+          and append
           (loop for l1term in l1terms
                 for l2term in l2terms
                 if (or (string-match helm-pattern l1term)
@@ -206,7 +210,7 @@ values that are admissible for the `browse-url-browser-function'."
                     (truncate-string-to-width l1term (- (/ width 2) 1) 0 ?\s)
                     " "
                     (truncate-string-to-width l2term (- (/ width 2) 1) 0 ?\s))
-                  (cons l1term l2term))))))
+                  (cons l1term l2term)))))
 
 
 (defun helm-dictionary-insert-l1term (entry)
