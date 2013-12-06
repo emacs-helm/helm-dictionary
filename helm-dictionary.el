@@ -194,13 +194,12 @@ values that are admissible for the `browse-url-browser-function'."
           for entry = (split-string i " :: ")
           for l1terms = (split-string (car entry) " | ")
           for l2terms = (split-string (cadr entry) " | ")
-          for filtered-helm-pattern = (replace-regexp-in-string "\\\\$" "" helm-pattern)
           for width = (with-helm-window (window-width))
           append
           (loop for l1term in l1terms
                 for l2term in l2terms
-                if (or (string-match filtered-helm-pattern l1term)
-                       (string-match filtered-helm-pattern l2term))
+                if (or (string-match helm-pattern l1term)
+                       (string-match helm-pattern l2term))
                 collect
                 (cons 
                   (concat
