@@ -192,10 +192,10 @@ values that are admissible for the `browse-url-browser-function'."
   (loop for i in candidates
         with entry and l1terms and l2terms and width
         if (or (string-match "\\`#" i)
-               (not (string-match " :: " i)))
+               (not (string-match " :: ?" i)))
           append (list)
         else
-          do     (setf entry (split-string i " :: "))
+          do     (setf entry (split-string i " :: ?"))
           and do (setf l1terms (split-string (car entry) " | "))
           and do (setf l2terms (split-string (cadr entry) " | "))
           and do (setf width   (with-helm-window (window-width)))
