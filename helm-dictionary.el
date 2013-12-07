@@ -266,15 +266,15 @@ values that are admissible for the `browse-url-browser-function'."
 
 (defvar helm-source-dictionary-online
   `((name . "Lookup online")
-    (dummy)
+    (match (lambda (_candidate) t))
+    (candidates . helm-dictionary-online-dicts)
+    (no-matchplugin)
     (nohighlight)
-    (filtered-candidate-transformer
-     . (lambda (_cands _source) helm-dictionary-online-dicts))
     (action
      . (lambda (cand)
          (let ((browse-url-browser-function
-                 (or helm-dictionary-browser-function
-                     browse-url-browser-function)))
+                (or helm-dictionary-browser-function
+                    browse-url-browser-function)))
            (helm-browse-url (format cand (url-hexify-string helm-pattern)))))))
   "Source for online lookup.")
 
