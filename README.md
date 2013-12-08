@@ -48,8 +48,8 @@ Admissible values for `helm-dictionary-browser-function` are the same as for `br
 
 ## Usage
 
-Use the command `helm-dictionary` to start a new search.  Alternatively, you can use `helm-dictionary-word-at-point` to search the word under the cursor.  Since the grep tool is used to perform the searches, you can also use regular expressions.
+Use the command `helm-dictionary` to start a new search.  As usual, a search is case-insensitive unless the expression contains capital letters.  Regular expressions can also be used as search terms.
 
-There are two actions available: insert the currently selected term in language 1 or language 2 at point, i.e., the cursor position at which `helm-dictionary` was called.
+There are two actions available: insert the currently selected term in the source language (left) or in the target language (right) at point, i.e., the cursor position at which `helm-dictionary` was called.
 
-In the section "Lookup online", you can choose among several online dictionaries.  If you select one of the entries listed in this section, a browser will be used to display search results from the respective online dictionary.
+In the section "Lookup online", you can choose among several online dictionaries.  If you select one of the entries listed in this section, a browser will be used to display search results from the respective dictionary.
