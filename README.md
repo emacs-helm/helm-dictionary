@@ -7,7 +7,7 @@ Dictionaries are available for a variety of language pairs; see below.
 
 ## Install
 
-Put the file `helm-dictionary.el` in your Emacs-Lisp load path and add the following in your Emacs startup file:
+Put the file `helm-dictionary.el` in your Emacs-Lisp load path and add the following in your Emacs start-up file:
 
     (require 'helm-dictionary)
 
@@ -39,12 +39,7 @@ These dictionaries were automatically created from the Wiktionary database.  The
 
 If the local dictionary doesn't have an entry for a word, it can be useful to try online dictionaries available on the web.  Helm-dictionary has a dummy source that provides shortcuts for looking up the currently entered string in these online dictionaries.  The variable `helm-dictionary-online-dicts` specifies which online dictionaries should be listed.  The value of that variable is a list conses.  The first element of each cons specifies the name of an online dictionary for display during searches.  The second element is the URL used for retrieving search results from the respective dictionary.  This URL has to contain a "%s" at the position where the search term should be inserted.
 
-Helm-dictionary uses the function `helm-browse-url` for opening online dictionaries.  Usually, this function opens the URL in an external web browser.  If a different method for opening URLs is preferred, the customization variable `helm-dictionary-browser-function` can be set to an alternative function for opening URLs such as `eww-browse-url`:
-
-    (require 'eww)
-    (setq helm-dictionary-browser-function 'eww-browse-url)
-
-Admissible values for `helm-dictionary-browser-function` are the same as for `browse-url-browser-function`.  If set to nil, Helm's current default browser will be used.
+The browser specified in `helm-dictionary-browser-function` will be used to show results from online dictionaries.  If this variable is nil (default), the value of the variable `browse-url-browser-function` will be used (the currently configured Emacs-wide default browser).  If that variable is also nil, helm uses the first available browser in `helm-browse-url-default-browser-alist`.
 
 ## Usage
 
@@ -52,4 +47,4 @@ Use the command `helm-dictionary` to start a new search.  As usual, a search is 
 
 There are two actions available: insert the currently selected term in the source language (left) or in the target language (right) at point, i.e., the cursor position at which `helm-dictionary` was called.
 
-In the section "Lookup online", you can choose among several online dictionaries.  If you select one of the entries listed in this section, a browser will be used to display search results from the respective dictionary.
+In the section "Look up online", you can choose among several online dictionaries.  If you select one of the entries listed in this section, a browser will be used to display search results from the respective dictionary.

@@ -24,7 +24,7 @@
 
 ;;; Commentary:
 
-;; This helm source can be used to look-up words in local (offline)
+;; This helm source can be used to look up words in local (offline)
 ;; dictionaries.  It also provides short-cuts for various online
 ;; dictionaries, which is useful in situations where the local
 ;; dictionary doesn't have an entry for a word.
@@ -83,20 +83,14 @@
 ;; results from the respective dictionary.  This URL has to contain a
 ;; "%s" at the position where the search term should be inserted.
 ;;
-;; Helm-dictionary uses the function `browse-url' for opening online
-;; dictionaries.  Usually, this function opens the URL in an external
-;; web browser.  If a different method for opening URLs is preferred,
-;; the customization variable `helm-dictionary-browser-function' can
-;; be set to an alternative function for opening URLs such as
-;; `eww-browse-url':
-;;
-;;    (require 'eww)
-;;    (setq helm-dictionary-browser-function 'eww-browse-url)
-;;
-;; Admissible values for `helm-dictionary-browser-function` are the
-;; same as for `browse-url-browser-function`.  If set to nil, the
-;; current emacs-wide default will be used, i.e., the browser
-;; specified in `browse-url-browser-function`.
+
+;; The browser specified in `helm-dictionary-browser-function' will be
+;; used to show results from online dictionaries.  If this variable is
+;; nil (default), the value of the variable
+;; `browse-url-browser-function' will be used (the currently
+;; configured Emacs-wide default browser).  If that variable is also
+;; nil, helm uses the first available browser in
+;; `helm-browse-url-default-browser-alist'.
 
 ;;; Usage:
 
@@ -109,7 +103,7 @@
 ;; point, i.e., the cursor position at which `helm-dictionary' was
 ;; called.
 
-;; In the section "Lookup online", you can choose among several online
+;; In the section "Look up online", you can choose among several online
 ;; dictionaries.  If you select one of the entries listed in this
 ;; section, a browser will be used to display search results from the
 ;; respective dictionary.
@@ -147,14 +141,12 @@ where the search term should be inserted.")
 
 (defcustom helm-dictionary-browser-function nil
   "The browser that is used to access online dictionaries.  If
-nil, the current emacs-wide standard browser will be used, i.e.,
-the browser specified by the customization variable
-`browse-url-browser-function'.  Other possible values are all
-values that are admissible for the `browse-url-browser-function'."
+nil (default), the value of `browse-url-browser-function' is
+used.  If that value is nil, Helm uses the first available
+browser in `helm-browse-url-default-browser-alist'"
   :group 'helm-dictionary
   :type '(choice
-          (const         :tag "Currently configured default for Helm"
-                         :value nil)
+          (const         :tag "Default" :value nil)
           (function-item :tag "Emacs interface to w3m" :value w3m-browse-url)
           (function-item :tag "Emacs W3" :value  browse-url-w3)
           (function-item :tag "W3 in another Emacs via `gnudoit'"
@@ -233,7 +225,7 @@ values that are admissible for the `browse-url-browser-function'."
                ("Insert target language term" . helm-dictionary-insert-l2term)))))
 
 (defvar helm-source-dictionary-online
-  `((name . "Lookup online")
+  `((name . "Look up online")
     (match (lambda (_candidate) t))
     (candidates . helm-dictionary-online-dicts)
     (no-matchplugin)
@@ -244,7 +236,7 @@ values that are admissible for the `browse-url-browser-function'."
                 (or helm-dictionary-browser-function
                     browse-url-browser-function)))
            (helm-browse-url (format cand (url-hexify-string helm-pattern)))))))
-  "Source for online lookup.")
+  "Source for online look-up.")
 
 ;;;###autoload
 (defun helm-dictionary ()
