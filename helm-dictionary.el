@@ -226,37 +226,28 @@ values that are admissible for the `browse-url-browser-function'."
   '((name . "Search dictionary")
     (candidates-file . helm-dictionary-database)
     (candidate-transformer . helm-dictionary-transformer)
-    (action . (("Insert German term"  . helm-dictionary-insert-l1term)
-               ("Insert English term" . helm-dictionary-insert-l2term)))))
+    (action . (("Insert source language term" . helm-dictionary-insert-l1term)
+               ("Insert target language term" . helm-dictionary-insert-l2term)))))
 
-(defvar helm-dictionary-source-online
+(defvar helm-source-dictionary-online
   `((name . "Lookup online")
-    (dummy)
+    (match (lambda (_candidate) t))
+    (candidates . helm-dictionary-online-dicts)
+    (no-matchplugin)
     (nohighlight)
-    (filtered-candidate-transformer
-     . (lambda (_cands _source) helm-dictionary-online-dicts))
     (action
      . (lambda (cand)
          (let ((browse-url-browser-function
-             (or helm-dictionary-browser-function
-                 browse-url-browser-function)))
+                (or helm-dictionary-browser-function
+                    browse-url-browser-function)))
            (helm-browse-url (format cand (url-hexify-string helm-pattern)))))))
   "Source for online lookup.")
 
 ;;;###autoload
 (defun helm-dictionary ()
   (interactive)
-  (helm :sources '(helm-source-dictionary helm-dictionary-source-online)
+  (helm :sources '(helm-source-dictionary helm-source-dictionary-online)
         :full-frame t
-        :candidate-number-limit 500
-        :buffer "*helm dictionary*"))
-
-;;;###autoload
-(defun helm-dictionary-word-at-point ()
-  (interactive)
-  (helm :sources '(helm-source-dictionary helm-dictionary-source-online)
-        :full-frame t
-        :input (word-at-point)
         :candidate-number-limit 500
         :buffer "*helm dictionary*"))
 
