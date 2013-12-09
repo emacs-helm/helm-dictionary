@@ -225,7 +225,7 @@ browser in `helm-browse-url-default-browser-alist'"
                ("Insert target language term" . helm-dictionary-insert-l2term)))))
 
 (defvar helm-source-dictionary-online
-  `((name . "Look up online")
+  '((name . "Look up online")
     (match (lambda (_candidate) t))
     (candidates . helm-dictionary-online-dicts)
     (no-matchplugin)
