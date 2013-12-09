@@ -96,7 +96,9 @@
 
 ;; Use the command `helm-dictionary' to start a new search.  As usual,
 ;; a search is case-insensitive unless the expression contains capital
-;; letters.  Regular expressions can also be used as search terms.
+;; letters.  Regular expressions can also be used as search
+;; terms.  During a search, you can use `M-n` to search for the word
+;; at which you called `helm-dictionary`.
 
 ;; There are two actions available: insert the currently selected term
 ;; in the source language (left) or in the target language (right) at

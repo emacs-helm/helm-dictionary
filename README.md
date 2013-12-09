@@ -1,7 +1,7 @@
 helm-dictionary
 ===============
 
-This helm source can be used to look-up words in local (offline) dictionaries.  It also provides short-cuts for various online dictionaries, which is useful in situations where the local dictionary doesn't have an entry for a word.
+This helm source can be used to look up words in local (offline) dictionaries.  It also provides short-cuts for various online dictionaries, which is useful in situations where the local dictionary doesn't have an entry for a word.
 
 Dictionaries are available for a variety of language pairs; see below.
 
@@ -43,7 +43,7 @@ The browser specified in `helm-dictionary-browser-function` will be used to show
 
 ## Usage
 
-Use the command `helm-dictionary` to start a new search.  As usual, a search is case-insensitive unless the expression contains capital letters.  Regular expressions can also be used as search terms.
+Use the command `helm-dictionary` to start a new search.  As usual, a search is case-insensitive unless the expression contains capital letters.  Regular expressions can also be used as search terms.  During a search, you can use `M-n` to search for the word at which you called `helm-dictionary`. 
 
 There are two actions available: insert the currently selected term in the source language (left) or in the target language (right) at point, i.e., the cursor position at which `helm-dictionary` was called.
 
