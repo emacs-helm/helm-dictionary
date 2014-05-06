@@ -181,8 +181,9 @@ browser in `helm-browse-url-default-browser-alist'"
                          :value browse-url-default-browser)
           (function      :tag "Your own function")
           (alist         :tag "Regexp/function association list"
-                         :key-type regexp :value-type function))
-)
+                         :key-type regexp :value-type function)))
+
+(easy-menu-add-item nil '("Tools" "Helm" "Tools") ["Dictionary" helm-dictionary t])
 
 
 (defun helm-dictionary-transformer (candidates)
