@@ -186,11 +186,26 @@ browser in `helm-browse-url-default-browser-alist'"
 (easy-menu-add-item nil '("Tools" "Helm" "Tools") ["Dictionary" helm-dictionary t])
 
 
+;; The function `window-width' does not necessarily report the correct
+;; number of characters that fit on a line.  This is a
+;; work-around.  See also this bug report:
+;; http://debbugs.gnu.org/cgi/bugreport.cgi?bug=19395
+(defun helm-dictionary-window-width ()
+  (if (and (not (featurep 'xemacs))
+           (display-graphic-p)
+           overflow-newline-into-fringe
+           (/= (frame-parameter nil 'left-fringe) 0)
+           (/= (frame-parameter nil 'right-fringe) 0))
+      (window-body-width)
+    (1- (window-body-width))))
+
 (defun helm-dictionary-transformer (candidates)
   "Formats entries retrieved from the data base."
   (cl-loop for i in candidates
            with entry and l1terms and l2terms
-           and width = (with-helm-window (window-width))
+           and width = (with-helm-window (helm-dictionary-window-width))
+           with left-col-width = (1- (/ width 2))
+           with right-col-width = (- width (/ width 2))
            unless (or (string-match "\\`#" i)
                       (not (string-match " :: ?" i)))
            do (progn (setq entry (split-string i " :: ?"))
@@ -204,9 +219,9 @@ browser in `helm-browse-url-default-browser-alist'"
                     collect
                     (cons 
                      (concat
-                      (truncate-string-to-width l1term (- (/ width 2) 1) 0 ?\s)
+                      (truncate-string-to-width l1term left-col-width 0 ?\s)
                       " "
-                      (truncate-string-to-width l2term (- (/ width 2) 1) 0 ?\s))
+                      (truncate-string-to-width l2term right-col-width 0 ?\s))
                      (cons l1term l2term)))))
 
 
