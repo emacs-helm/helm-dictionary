@@ -131,11 +131,11 @@
      "http://translate.reference.com/translate?query=%s&src=de&dst=en")
     ("translate.reference.com eng->de" .
      "http://translate.reference.com/translate?query=%s&src=en&dst=de")
-    ("leo eng<->de" .
+    ("Leo eng<->de" .
      "http://dict.leo.org/ende?lp=ende&lang=de&search=%s")
     ("en.wiktionary.org" . "http://en.wiktionary.org/wiki/%s")
     ("de.wiktionary.org" . "http://de.wiktionary.org/wiki/%s")
-    ("linguee-eng<->de" . "http://www.linguee.de/deutsch-englisch/search\
+    ("Linguee eng<->de" . "http://www.linguee.de/deutsch-englisch/search\
 ?sourceoverride=none&source=auto&query=%s"))
   "Alist of online dictionaries.  The key of each entry is the
 name of the online dictionary.  The value is the URL used for
