@@ -7,7 +7,7 @@ Dictionaries are available for a variety of language pairs; see below.
 
 ## Install
 
-Helm-dictionary can be installed via [MELPA](http://melpa.milkbox.net/#/).  Alternatively, put the file `helm-dictionary.el` in your Emacs-Lisp load path and add the following in your Emacs start-up file:
+Helm-dictionary can be installed via [MELPA](https://melpa.org/).  Alternatively, put the file `helm-dictionary.el` in your Emacs-Lisp load path and add the following in your Emacs start-up file:
 
     (require 'helm-dictionary)
 
