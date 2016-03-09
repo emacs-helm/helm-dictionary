@@ -214,6 +214,8 @@ browser in `helm-browse-url-default-browser-alist'"
            and append
            (cl-loop for l1term in l1terms
                     for l2term in l2terms
+                    if (or (string-match helm-pattern l1term)
+                           (string-match helm-pattern l2term))
                     collect
                     (cons 
                      (concat
