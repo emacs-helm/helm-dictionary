@@ -214,8 +214,6 @@ browser in `helm-browse-url-default-browser-alist'"
            and append
            (cl-loop for l1term in l1terms
                     for l2term in l2terms
-                    if (or (string-match helm-pattern l1term)
-                           (string-match helm-pattern l2term))
                     collect
                     (cons 
                      (concat
@@ -237,24 +235,22 @@ browser in `helm-browse-url-default-browser-alist'"
 
 
 (defvar helm-source-dictionary
-  '((name . "Search dictionary")
-    (candidates-file . helm-dictionary-database)
-    (candidate-transformer . helm-dictionary-transformer)
-    (action . (("Insert source language term" . helm-dictionary-insert-l1term)
-               ("Insert target language term" . helm-dictionary-insert-l2term)))))
+  (helm-build-in-file-source "Search dictionary" helm-dictionary-database
+    :candidate-transformer 'helm-dictionary-transformer
+    :action '(("Insert source language term" . helm-dictionary-insert-l1term)
+              ("Insert target language term" . helm-dictionary-insert-l2term))))
 
 (defvar helm-source-dictionary-online
-  '((name . "Look up online")
-    (match (lambda (_candidate) t))
-    (candidates . helm-dictionary-online-dicts)
-    (no-matchplugin)
-    (nohighlight)
-    (action
-     . (lambda (cand)
-         (let ((browse-url-browser-function
-                (or helm-dictionary-browser-function
-                    browse-url-browser-function)))
-           (helm-browse-url (format cand (url-hexify-string helm-pattern)))))))
+  (helm-build-sync-source "Look up online"
+    :match (lambda (_candidate) t)
+    :candidates helm-dictionary-online-dicts
+    :matchplugin nil
+    :nohighlight t
+    :action (lambda (cand)
+              (let ((browse-url-browser-function
+                     (or helm-dictionary-browser-function
+                         browse-url-browser-function)))
+                (helm-browse-url (format cand (url-hexify-string helm-pattern))))))
   "Source for online look-up.")
 
 ;;;###autoload
