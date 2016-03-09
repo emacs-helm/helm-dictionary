@@ -115,7 +115,7 @@
 (require 'cl-lib)
 (require 'helm)
 (require 'helm-net)
-(require 'helm-plugin)
+(require 'helm-easymenu)
 
 (defgroup helm-dictionary nil
   "Helm plugin for looking up a dictionary."
