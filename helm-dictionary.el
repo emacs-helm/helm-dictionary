@@ -140,7 +140,9 @@
   "Alist of online dictionaries.  The key of each entry is the
 name of the online dictionary.  The value is the URL used for
 retrieving results.  This URL must contain a %s at the position
-where the search term should be inserted.")
+where the search term should be inserted."
+  :group 'helm-dictionary
+  :type '(alist :key-type string :value-type string))
 
 (defcustom helm-dictionary-browser-function nil
   "The browser that is used to access online dictionaries.  If
