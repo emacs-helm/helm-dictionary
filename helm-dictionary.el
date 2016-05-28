@@ -122,9 +122,13 @@
   :group 'helm)
 
 (defcustom helm-dictionary-database "/usr/share/trans/de-en"
-  "The file containing the dictionary."
+  "The file containing the dictionary, or an alist of offline
+dictionaries where the key of each entry is the name of the
+dictionary and the value is the file."
   :group 'helm-dictionary
-  :type  'file)
+  :type  '(choice
+           (file)
+           (alist :key-type string :value-type: file)))
 
 (defcustom helm-dictionary-online-dicts
   '(("translate.reference.com de->eng" .
@@ -237,12 +241,19 @@ browser in `helm-browse-url-default-browser-alist'"
     (replace-regexp-in-string
       " *{.+}\\| *\\[.+\\]" "" (cdr entry))))
 
-
-(defvar helm-source-dictionary
-  (helm-build-in-file-source "Search dictionary" helm-dictionary-database
+(defun helm-dictionary-build (name file)
+  (helm-build-in-file-source name file
     :candidate-transformer 'helm-dictionary-transformer
     :action '(("Insert source language term" . helm-dictionary-insert-l1term)
               ("Insert target language term" . helm-dictionary-insert-l2term))))
+
+
+(defvar helm-source-dictionary
+  (mapcar
+   (lambda (x) (helm-dictionary-build (car x) (cdr x)))
+   (if (stringp helm-dictionary-database)
+       (list (cons "Search dictionary" helm-dictionary-database))
+     helm-dictionary-database)))
 
 (defvar helm-source-dictionary-online
   (helm-build-sync-source "Look up online"
@@ -260,7 +271,7 @@ browser in `helm-browse-url-default-browser-alist'"
 ;;;###autoload
 (defun helm-dictionary ()
   (interactive)
-  (helm :sources '(helm-source-dictionary helm-source-dictionary-online)
+  (helm :sources (append helm-source-dictionary (list helm-source-dictionary-online))
         :full-frame t
         :candidate-number-limit 500
         :buffer "*helm dictionary*"))
