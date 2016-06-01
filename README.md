@@ -43,8 +43,10 @@ The browser specified in `helm-dictionary-browser-function` will be used to show
 
 ## Usage
 
-Use the command `helm-dictionary` to start a new search.  As usual, a search is case-insensitive unless the expression contains capital letters.  Regular expressions can also be used as search terms.  During a search, you can use `M-n` to search for the word at which you called `helm-dictionary`. 
+Use the command `M-x helm-dictionary` to start a new search or bind `helm-dictionary` to a key.  As usual, a search is case-insensitive unless the expression contains capital letters.  Regular expressions can also be used as search terms.  Specifically, you can use `\b` to denote word boundaries when you want to search for complete words, e.g., `\bhouse\b` when you only want the entry for the word *house* but not entries like *household* and *workhouse*.
+
+You can use `M-n` to insert the word on which you called `helm-dictionary` (works in all helm sources). 
 
 There are two actions available: insert the currently selected term in the source language (left) or in the target language (right) at point, i.e., the cursor position at which `helm-dictionary` was called.
 
-In the section "Look up online", you can choose among several online dictionaries.  If you select one of the entries listed in this section, a browser will be used to display search results from the respective dictionary.
+In the section *Look up online*, you can choose among several online dictionaries.  If you select one of the entries listed in this section, a browser will be used to display search results from the respective dictionary.
