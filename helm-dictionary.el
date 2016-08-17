@@ -246,7 +246,7 @@ browser in `helm-browse-url-default-browser-alist'"
   (helm-build-sync-source "Look up online"
     :match (lambda (_candidate) t)
     :candidates helm-dictionary-online-dicts
-    :matchplugin nil
+    :multimatch nil
     :nohighlight t
     :action (lambda (cand)
               (let ((browse-url-browser-function
