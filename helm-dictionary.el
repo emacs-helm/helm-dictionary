@@ -130,6 +130,10 @@ dictionary and the value is the file."
            (file)
            (alist :key-type string :value-type: file)))
 
+(defcustom helm-dictionary-use-full-frame t
+  "If non-nil, use entire frame for helm popup."
+  :group 'helm-dictionary)
+
 (defcustom helm-dictionary-online-dicts
   '(("translate.reference.com de->eng" .
      "http://translate.reference.com/translate?query=%s&src=de&dst=en")
@@ -271,7 +275,7 @@ browser in `helm-browse-url-default-browser-alist'"
               (list (cons "Search dictionary" helm-dictionary-database))
             helm-dictionary-database))))
     (helm :sources (append helm-source-dictionary (list helm-source-dictionary-online))
-          :full-frame t
+          :full-frame helm-dictionary-use-full-frame
           :candidate-number-limit 500
           :buffer "*helm dictionary*")))
 
