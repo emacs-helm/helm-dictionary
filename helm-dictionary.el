@@ -269,9 +269,11 @@ browser in `helm-browse-url-default-browser-alist'"
           (lambda (x) (helm-dictionary-build (car x) (cdr x)))
           (if (stringp helm-dictionary-database)
               (list (cons "Search dictionary" helm-dictionary-database))
-            helm-dictionary-database))))
+            helm-dictionary-database)))
+        (input (thing-at-point 'word)))
     (helm :sources (append helm-source-dictionary (list helm-source-dictionary-online))
           :full-frame t
+          :input input
           :candidate-number-limit 500
           :buffer "*helm dictionary*")))
 
