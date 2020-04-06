@@ -1,3 +1,5 @@
+[![MELPA](https://melpa.org/packages/helm-dictionary-badge.svg)](https://melpa.org/#/helm-dictionary)
+
 helm-dictionary
 ===============
 
