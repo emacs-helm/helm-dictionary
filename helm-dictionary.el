@@ -273,7 +273,7 @@ browser in `helm-browse-url-default-browser-alist'"
         (input (thing-at-point 'word)))
     (helm :sources (append helm-source-dictionary (list helm-source-dictionary-online))
           :full-frame t
-          :input input
+          :default input
           :candidate-number-limit 500
           :buffer "*helm dictionary*")))
 
