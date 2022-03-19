@@ -156,7 +156,6 @@ browser in `helm-browse-url-default-browser-alist'"
   :group 'helm-dictionary
   :type '(choice
           (const         :tag "Default" :value nil)
-          (function-item :tag "Emacs interface to w3m" :value w3m-browse-url)
           (function-item :tag "Emacs W3" :value  browse-url-w3)
           (function-item :tag "W3 in another Emacs via `gnudoit'"
                          :value  browse-url-w3-gnudoit)
@@ -167,8 +166,6 @@ browser in `helm-browse-url-default-browser-alist'"
           (function-item :tag "Epiphany" :value  browse-url-epiphany)
           (function-item :tag "Netscape" :value  browse-url-netscape)
           (function-item :tag "eww" :value  eww-browse-url)
-          (function-item :tag "Mosaic" :value  browse-url-mosaic)
-          (function-item :tag "Mosaic using CCI" :value  browse-url-cci)
           (function-item :tag "Text browser in an xterm window"
                          :value browse-url-text-xterm)
           (function-item :tag "Text browser in an Emacs window"
