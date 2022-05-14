@@ -186,6 +186,11 @@ browser in `helm-browse-url-default-browser-alist'"
           (alist         :tag "Regexp/function association list"
                          :key-type regexp :value-type function)))
 
+(defcustom helm-dictionary-ignore-diacritics nil
+  "Ignore diacritics when non nil."
+  :group 'helm-dictionary
+  :type 'boolean)
+
 (easy-menu-add-item nil '("Tools" "Helm" "Tools") ["Dictionary" helm-dictionary t])
 
 
@@ -239,6 +244,7 @@ browser in `helm-browse-url-default-browser-alist'"
 (defun helm-dictionary-build (name file)
   (helm-build-in-file-source name file
     :candidate-transformer 'helm-dictionary-transformer
+    :diacritics helm-dictionary-ignore-diacritics
     :action '(("Insert source language term" . helm-dictionary-insert-l1term)
               ("Insert target language term" . helm-dictionary-insert-l2term))))
 
