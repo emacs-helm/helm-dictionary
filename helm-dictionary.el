@@ -205,7 +205,7 @@ browser in `helm-browse-url-default-browser-alist'"
       (window-body-width)
     (1- (window-body-width))))
 
-(defun helm-dictionary-transformer (candidates)
+(defun helm-dictionary-transformer (candidates _source)
   "Formats entries retrieved from the data base."
   (cl-loop for i in candidates
            with entry and l1terms and l2terms
@@ -241,7 +241,7 @@ browser in `helm-browse-url-default-browser-alist'"
 
 (defun helm-dictionary-build (name file)
   (helm-build-in-file-source name file
-    :candidate-transformer 'helm-dictionary-transformer
+    :filtered-candidate-transformer 'helm-dictionary-transformer
     :action '(("Insert source language term" . helm-dictionary-insert-l1term)
               ("Insert target language term" . helm-dictionary-insert-l2term))))
 
