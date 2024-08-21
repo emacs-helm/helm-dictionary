@@ -33,6 +33,10 @@ A variety of dictionaries with English as the source or target language can be f
 
 - https://en.wiktionary.org/wiki/User:Matthias_Buchmeier
 
+A french and english dictionary built from above can be found here:
+
+- https://github.com/thierryvolpiatto/dic-en-fr-fr-en
+
 These dictionaries were automatically created from the Wiktionary database.  Their size and quality may vary.  Also generated from Wiktionary are the following dictionaries with Russian as the source or target language:
 
 - http://wiktionary-export.nataraj.su/en/
