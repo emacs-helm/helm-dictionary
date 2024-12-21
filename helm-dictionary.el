@@ -191,6 +191,12 @@ browser in `helm-browse-url-default-browser-alist'"
   :group 'helm-dictionary
   :type 'boolean)
 
+(defcustom helm-dictionary-actions
+  '(("Insert source language term" . helm-dictionary-insert-l1term)
+    ("Insert target language term" . helm-dictionary-insert-l2term))
+  "Default actions for helm-dictionary"
+  :type '(alist :key-type string :value-type function))
+
 (easy-menu-add-item nil '("Tools" "Helm" "Tools") ["Dictionary" helm-dictionary t])
 
 
@@ -248,8 +254,7 @@ browser in `helm-browse-url-default-browser-alist'"
   (helm-build-in-file-source name file
     :filtered-candidate-transformer 'helm-dictionary-transformer
     :diacritics helm-dictionary-ignore-diacritics
-    :action '(("Insert source language term" . helm-dictionary-insert-l1term)
-              ("Insert target language term" . helm-dictionary-insert-l2term))))
+    :action helm-dictionary-actions))
 
 
 (defvar helm-source-dictionary-online
