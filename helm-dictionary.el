@@ -231,15 +231,18 @@ browser in `helm-browse-url-default-browser-alist'"
                      (cons l1term l2term)))))
 
 
+(defun helm-dictionary-get-candidate (entry term)
+  (replace-regexp-in-string
+   " *[[{].+[]}]" ""
+   (helm-acase term
+     (1 (car entry))
+     (2 (cdr entry)))))
+
 (defun helm-dictionary-insert-l1term (entry)
-  (insert
-    (replace-regexp-in-string
-      " *{.+}\\| *\\[.+\\]" "" (car entry))))
+  (insert (helm-dictionary-get-candidate entry 1)))
 
 (defun helm-dictionary-insert-l2term (entry)
-  (insert
-    (replace-regexp-in-string
-      " *{.+}\\| *\\[.+\\]" "" (cdr entry))))
+  (insert (helm-dictionary-get-candidate entry 2)))
 
 (defun helm-dictionary-build (name file)
   (helm-build-in-file-source name file
