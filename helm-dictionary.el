@@ -239,7 +239,7 @@ browser in `helm-browse-url-default-browser-alist'"
 
 (defun helm-dictionary-get-candidate (entry term)
   (replace-regexp-in-string
-   " *[[{].+[]}]" ""
+   " *[[{].+?[]}]" ""
    (helm-acase term
      (1 (car entry))
      (2 (cdr entry)))))
