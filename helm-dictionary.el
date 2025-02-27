@@ -1,4 +1,4 @@
-;;; helm-dictionary.el --- Helm source for looking up dictionaries
+;;; helm-dictionary.el --- Helm source for looking up dictionaries -*- lexical-binding: t -*-
 
 ;; Copyright 2013 Titus von der Malsburg <malsburg@posteo.de>
 
